@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import { UserContext } from '../../contexts/user.context';
 
 import {
 	createUserDocumentFromAuth,
@@ -11,6 +13,8 @@ import Button from '../button/button.component';
 
 import './sign-in-form.styles.scss';
 const SignInForm = () => {
+	const { setCurrentUser } = useContext(UserContext);
+
 	const defaultFormFields = {
 		email: '',
 		password: '',
@@ -33,13 +37,13 @@ const SignInForm = () => {
 
 	const handleSubmit = async (evt) => {
 		evt.preventDefault();
-		
+
 		try {
-			const response = await signAuthUserWithEmailAndPassword(
+			const { user } = await signAuthUserWithEmailAndPassword(
 				email,
 				password
 			);
-			console.log(response);
+			setCurrentUser(user);
 			resetForm();
 		} catch (err) {
 			switch (err.code) {
