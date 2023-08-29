@@ -36,7 +36,7 @@ const clearCartItem = (cartItems, cartItemToRemove) => {
 	return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
 };
 
-const updateCartItems = (cartItems) => {
+export const updateCartItems = (cartItems) => {
 	return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, cartItems);
 };
 
