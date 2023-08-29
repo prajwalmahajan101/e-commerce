@@ -14,8 +14,11 @@ export const googleSignInStart = () => {
 	return createAction(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START);
 };
 
-export const emailSignInStart = () => {
-	return createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START);
+export const emailSignInStart = (email, password) => {
+	return createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, {
+		email,
+		password,
+	});
 };
 
 export const signInSuccess = (user) => {
