@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { selectCartItems } from '../../store/cart/cart.selector';
@@ -8,9 +8,18 @@ import {
 	clearItemFromCart,
 } from '../../store/cart/cart.action';
 
-import './checkout-item.styles.scss';
+import {
+	CheckoutItemContainer,
+	RemoveButton,
+	ImageContainer,
+} from './checkout-item.styles';
+import { CartItem } from '../../store/cart/cart.types';
 
-const CheckoutItem = ({ cartItem }) => {
+type CheckoutItemProps = {
+	cartItem: CartItem;
+};
+
+const CheckoutItem: FC<CheckoutItemProps> = ({ cartItem }) => {
 	const dispatch = useDispatch();
 	const cartItems = useSelector(selectCartItems);
 	const { name, imageUrl, price, quantity } = cartItem;
@@ -22,10 +31,10 @@ const CheckoutItem = ({ cartItem }) => {
 	const addItemHelper = () => dispatch(addItemToCart(cartItems, cartItem));
 
 	return (
-		<div className="checkout-item-container">
-			<div className="image-container">
+		<CheckoutItemContainer>
+			<ImageContainer>
 				<img src={imageUrl} alt={`${name}`} />
-			</div>
+			</ImageContainer>
 			<span className="name">{name}</span>
 			<span className="quantity">
 				<div className="arrow" onClick={removeItemHelper}>
@@ -37,10 +46,8 @@ const CheckoutItem = ({ cartItem }) => {
 				</div>
 			</span>
 			<span className="price">{price}</span>
-			<div className="remove-button" onClick={clearItemHelper}>
-				&#10005;
-			</div>
-		</div>
+			<RemoveButton onClick={clearItemHelper}>&#10005;</RemoveButton>
+		</CheckoutItemContainer>
 	);
 };
 
