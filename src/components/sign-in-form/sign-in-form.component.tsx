@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import {
+	ChangeEvent,
+	FormEvent,
+	useState,
+} from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -9,7 +13,7 @@ import {
 import FormInput from '../form-input/form-input.component';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
-import './sign-in-form.styles.scss';
+import { ButtonsContainer, SignInContainer } from './sign-in-form.styles';
 
 const SignInForm = () => {
 	const dispatch = useDispatch();
@@ -23,7 +27,7 @@ const SignInForm = () => {
 
 	const { email, password } = formFields;
 
-	const handleChange = (evt) => {
+	const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = evt.target;
 		setFormFields((prevState) => {
 			return { ...prevState, [name]: value };
@@ -34,7 +38,7 @@ const SignInForm = () => {
 		setFormFields(defaultFormFields);
 	};
 
-	const handleSubmit = async (evt) => {
+	const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		try {
 			dispatch(emailSignInStart(email, password));
@@ -49,7 +53,7 @@ const SignInForm = () => {
 	};
 
 	return (
-		<div className="sign-in-container">
+		<SignInContainer>
 			<h2>Already have an account?</h2>
 			<span>Sign up with your email and password</span>
 			<form onSubmit={handleSubmit}>
@@ -69,7 +73,7 @@ const SignInForm = () => {
 					value={password}
 					required
 				/>
-				<div className="buttons-container">
+				<ButtonsContainer>
 					<Button type="submit">Sign In</Button>
 					<Button
 						type="button"
@@ -78,9 +82,9 @@ const SignInForm = () => {
 					>
 						Sign In With Google
 					</Button>
-				</div>
+				</ButtonsContainer>
 			</form>
-		</div>
+		</SignInContainer>
 	);
 };
 
